@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ACAFF227-C307-C93B-24FB-255AEFB27327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aviendha", "framework\src\Aviendha\Aviendha.csproj", "{AA0000D6-7F5D-4891-BC13-BFAE7BDA3F86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aviendha.Core", "framework\src\Aviendha\Aviendha.Core.csproj", "{AA0000D6-7F5D-4891-BC13-BFAE7BDA3F86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aviendha.Ddd.Domain", "framework\src\Aviendha.Ddd.Domain\Aviendha.Ddd.Domain.csproj", "{8A7CE0F7-4089-4D1B-840A-3F07F995A0E1}"
 EndProject

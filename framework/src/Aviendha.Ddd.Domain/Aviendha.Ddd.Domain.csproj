@@ -11,7 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Aviendha.Ddd.Domain.Shared\Aviendha.Ddd.Domain.Shared.csproj" />
-      <ProjectReference Include="..\Aviendha\Aviendha.csproj" />
+      <ProjectReference Include="..\Aviendha\Aviendha.Core.csproj" />
     </ItemGroup>
 
 </Project>

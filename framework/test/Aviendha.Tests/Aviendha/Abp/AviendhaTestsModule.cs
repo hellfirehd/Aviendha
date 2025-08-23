@@ -17,7 +17,7 @@ using Volo.Abp.VirtualFileSystem;
 
 namespace Aviendha.Abp;
 
-[DependsOn(typeof(AviendhaModule))]
+[DependsOn(typeof(AviendhaCoreModule))]
 [DependsOn(typeof(AviendhaTestBaseModule))]
 public class AviendhaTestsModule : AbpModule
 {

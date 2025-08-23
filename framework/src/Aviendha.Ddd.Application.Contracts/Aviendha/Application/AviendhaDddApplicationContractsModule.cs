@@ -17,6 +17,7 @@ using Volo.Abp.Modularity;
 
 namespace Aviendha.Application;
 
+[DependsOn(typeof(AviendhaCoreModule))]
 [DependsOn(typeof(AviendhaDddDomainSharedModule))]
 public class AviendhaDddApplicationContractsModule : AbpModule
 {

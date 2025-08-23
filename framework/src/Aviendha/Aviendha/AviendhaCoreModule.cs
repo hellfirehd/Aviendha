@@ -16,4 +16,4 @@ using Volo.Abp.Modularity;
 
 namespace Aviendha;
 
-public class AviendhaModule : AbpModule;
+public class AviendhaCoreModule : AbpModule;

@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Aviendha\Aviendha.csproj" />
+      <ProjectReference Include="..\Aviendha\Aviendha.Core.csproj" />
     </ItemGroup>
     
 </Project>

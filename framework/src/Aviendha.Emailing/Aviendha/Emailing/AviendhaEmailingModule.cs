@@ -19,7 +19,7 @@ using Volo.Abp.Modularity;
 namespace Aviendha.Emailing;
 
 [DependsOn(typeof(AbpEmailingModule))]
-[DependsOn(typeof(AviendhaModule))]
+[DependsOn(typeof(AviendhaCoreModule))]
 [DependsOn(typeof(AviendhaSecurityModule))]
 public class AviendhaEmailingModule : AbpModule
 {
