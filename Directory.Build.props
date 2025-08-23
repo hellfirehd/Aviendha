@@ -21,6 +21,10 @@
         <IsApplication Condition="$(MSBuildProjectFullPath.Contains('host'))">true</IsApplication>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+    
     <PropertyGroup Condition="'$(IsApplication)' != 'true'">
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PackageIcon>aviendha.png</PackageIcon>
