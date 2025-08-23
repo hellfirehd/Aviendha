@@ -110,6 +110,11 @@
         <PackageReference Include="Bogus.Tools.Analyzer">
             <TreatAsUsed>true</TreatAsUsed>
         </PackageReference>
+        <PackageReference Include="coverlet.collector">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+            <TreatAsUsed>true</TreatAsUsed>
+        </PackageReference>
         <PackageReference Include="Microsoft.NET.Test.Sdk">
             <TreatAsUsed>true</TreatAsUsed>
         </PackageReference>
