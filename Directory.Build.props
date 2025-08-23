@@ -25,7 +25,7 @@
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PackageIcon>aviendha.png</PackageIcon>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-        <PackageOutputPath>$(SolutionDir)\artifacts</PackageOutputPath>
+        <PackageOutputPath>$(SolutionDir)artifacts</PackageOutputPath>
         <PackageProjectUrl>https://abp.Aviendha.Aviendha.io/</PackageProjectUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
