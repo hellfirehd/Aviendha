@@ -12,7 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Aviendha.Security\Aviendha.Security.csproj" />
-      <ProjectReference Include="..\Aviendha\Aviendha.Core.csproj" />
+      <ProjectReference Include="..\Aviendha.Core\Aviendha.Core.csproj" />
     </ItemGroup>
 
 </Project>
