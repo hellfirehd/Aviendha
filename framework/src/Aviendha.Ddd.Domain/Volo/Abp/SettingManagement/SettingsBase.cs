@@ -12,10 +12,9 @@
 // You should have received a copy of the GNU Affero General Public License along with this
 // program. If not, see <https://www.gnu.org/licenses/>.
 
-using Volo.Abp;
 using Volo.Abp.Settings;
 
-namespace Aviendha.Settings;
+namespace Volo.Abp.SettingManagement;
 
 public abstract class SettingsBase(ISettingProvider settingProvider)
 {
