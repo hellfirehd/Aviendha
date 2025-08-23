@@ -1,0 +1,102 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'release/**'
+  pull_request:
+    branches:
+      - main
+      - develop
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Required for GitVersioning
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Install Nerdbank.GitVersioning
+      run: dotnet tool install -g nbgv
+
+    - name: Set version
+      run: nbgv cloud
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Run static analysis
+      run: dotnet build --no-restore --configuration Release /warnaserror
+
+    - name: Run tests
+      run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage" --logger trx --results-directory TestResults
+
+    - name: Publish test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ matrix.os }}
+        path: "**/TestResults/*.trx"
+
+    - name: Publish code coverage
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage-${{ matrix.os }}
+        path: "**/TestResults/**/coverage.cobertura.xml"
+
+    - name: Pack NuGet packages
+      if: matrix.os == 'ubuntu-latest'
+      run: dotnet pack --no-build --configuration Release --output ./artifacts
+
+    - name: Upload NuGet packages
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-packages
+        path: ./artifacts/*.nupkg
+
+  publish-preview:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/')
+    environment: nuget-preview
+
+    steps:
+    - name: Download NuGet packages
+      uses: actions/download-artifact@v4
+      with:
+        name: nuget-packages
+        path: ./artifacts
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Push to NuGet (Preview)
+      run: |
+        dotnet nuget push "./artifacts/*.nupkg" \
+          --source https://api.nuget.org/v3/index.json \
+          --api-key ${{ secrets.NUGET_API_KEY }} \
+          --skip-duplicate

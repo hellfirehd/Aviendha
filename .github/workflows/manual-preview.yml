@@ -1,0 +1,102 @@
+name: Manual Preview Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build from'
+        required: true
+        default: 'main'
+        type: string
+      include_symbols:
+        description: 'Include symbol packages'
+        required: false
+        default: true
+        type: boolean
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    environment: nuget-preview
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.branch }}
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Install Nerdbank.GitVersioning
+      run: dotnet tool install -g nbgv
+
+    - name: Set version
+      run: nbgv cloud
+
+    - name: Get version info
+      id: version
+      run: |
+        VERSION=$(nbgv get-version --variable Version)
+        SIMPLE_VERSION=$(nbgv get-version --variable SimpleVersion)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "simple-version=$SIMPLE_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Run tests
+      run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
+
+    - name: Pack NuGet packages
+      run: |
+        if [ "${{ github.event.inputs.include_symbols }}" = "true" ]; then
+          dotnet pack --no-build --configuration Release --output ./artifacts --include-symbols
+        else
+          dotnet pack --no-build --configuration Release --output ./artifacts
+        fi
+
+    - name: List packages
+      run: |
+        echo "## Generated Packages" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "| Package | Version |" >> $GITHUB_STEP_SUMMARY
+        echo "|---------|---------|" >> $GITHUB_STEP_SUMMARY
+        for pkg in ./artifacts/*.nupkg; do
+          filename=$(basename "$pkg")
+          echo "| $filename | ${{ steps.version.outputs.version }} |" >> $GITHUB_STEP_SUMMARY
+        done
+
+    - name: Push to NuGet
+      run: |
+        echo "Publishing packages to NuGet..."
+        dotnet nuget push "./artifacts/*.nupkg" \
+          --source https://api.nuget.org/v3/index.json \
+          --api-key ${{ secrets.NUGET_API_KEY }} \
+          --skip-duplicate
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: preview-packages-${{ steps.version.outputs.simple-version }}
+        path: ./artifacts/*.nupkg
+
+    - name: Create summary
+      run: |
+        echo "## Preview Release Published! 🚀" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Version:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Branch:** ${{ github.event.inputs.branch }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Packages are now available on [NuGet.org](https://www.nuget.org/packages?q=Aviendha)."
