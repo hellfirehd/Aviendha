@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="**\*generate-proxy.json" />
+        <Content Remove="**\*generate-proxy.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.Http.Client" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Aviendha.BillingManagement.Application.Contracts\Aviendha.BillingManagement.Application.Contracts.csproj" />
+    </ItemGroup>
+
+</Project>

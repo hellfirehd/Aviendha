@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="OpenIddict.Abstractions" />
+        <PackageReference Include="Serilog.Enrichers.Environment" />
+        <PackageReference Include="Serilog.Extensions.Hosting" />
+        <PackageReference Include="Serilog.Settings.Configuration" />
+        <PackageReference Include="Serilog.Sinks.Async" />
+        <PackageReference Include="Serilog.Sinks.Console" />
+        <PackageReference Include="Serilog.Sinks.File">
+          <TreatAsUsed>true</TreatAsUsed>
+        </PackageReference>
+        <PackageReference Include="Serilog.Sinks.Seq" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Aviendha.Security\Aviendha.Security.csproj" />
+    </ItemGroup>
+
+</Project>

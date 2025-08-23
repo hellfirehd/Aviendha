@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+        <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Blazorise.Bootstrap5" />
+        <PackageReference Include="Blazorise.Icons.FontAwesome" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" />
+        <PackageReference Include="Volo.Abp.Account.Application.Contracts" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme" />
+        <PackageReference Include="Volo.Abp.Autofac.WebAssembly" />
+        <PackageReference Include="Volo.Abp.Identity.Blazor.WebAssembly" />
+        <PackageReference Include="Volo.Abp.SettingManagement.Blazor.WebAssembly" />
+        <PackageReference Include="Volo.Abp.TenantManagement.Blazor.WebAssembly" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Aviendha.BillingManagement.Host.Shared\Aviendha.BillingManagement.Host.Shared.csproj" />
+        <ProjectReference Include="..\..\src\Aviendha.BillingManagement.Blazor.WebAssembly\Aviendha.BillingManagement.Blazor.WebAssembly.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.Ddd.Domain" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Aviendha.Ddd.Domain.Shared\Aviendha.Ddd.Domain.Shared.csproj" />
+      <ProjectReference Include="..\Aviendha\Aviendha.csproj" />
+    </ItemGroup>
+
+</Project>

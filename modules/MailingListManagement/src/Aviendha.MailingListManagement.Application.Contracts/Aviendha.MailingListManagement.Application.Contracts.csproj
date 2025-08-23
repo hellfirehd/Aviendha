@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+<RootNamespace />    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" />
+        <PackageReference Include="Volo.Abp.Authorization" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\framework\src\Aviendha\Aviendha.csproj" />
+      <ProjectReference Include="..\Aviendha.MailingListManagement.Domain.Shared\Aviendha.MailingListManagement.Domain.Shared.csproj" />
+    </ItemGroup>
+
+</Project>

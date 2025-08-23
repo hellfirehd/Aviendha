@@ -1,0 +1,14 @@
+{
+  "id": "941d4b31-5119-4795-a8ac-87175801a7ac",
+  "template": "empty",
+  "modules": {
+    "Aviendha": {
+      "path": "Aviendha.abpmdl"
+    }
+  },
+  "runProfiles": {
+    "Default": {
+      "path": "etc/abp-studio/run-profiles/Default.abprun.json"
+    }
+  }
+}

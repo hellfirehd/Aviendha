@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" />
+        <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Aviendha.BillingManagement.EntityFrameworkCore\Aviendha.BillingManagement.EntityFrameworkCore.csproj" />
+        <ProjectReference Include="..\Aviendha.BillingManagement.Application.Tests\Aviendha.BillingManagement.Application.Tests.csproj" />
+    </ItemGroup>
+
+</Project>

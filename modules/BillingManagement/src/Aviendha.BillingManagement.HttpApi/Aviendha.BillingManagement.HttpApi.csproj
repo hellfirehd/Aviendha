@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.AspNetCore.Mvc" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Aviendha.BillingManagement.Application.Contracts\Aviendha.BillingManagement.Application.Contracts.csproj" />
+    </ItemGroup>
+
+</Project>

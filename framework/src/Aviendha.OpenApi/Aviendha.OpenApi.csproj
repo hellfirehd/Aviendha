@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Kiota.Http.HttpClientLibrary" />
+        <PackageReference Include="Swashbuckle.AspNetCore" />
+        <PackageReference Include="Volo.Abp.Autofac" />
+    </ItemGroup>
+
+</Project>

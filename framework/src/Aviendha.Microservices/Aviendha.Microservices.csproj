@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DistributedLock.Redis" />
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Serilog" />
+        <PackageReference Include="Volo.Abp.Autofac" />
+        <PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" />
+        <PackageReference Include="Volo.Abp.DistributedLocking" />
+        <PackageReference Include="Volo.Abp.Swashbuckle" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Aviendha\Aviendha.csproj" />
+    </ItemGroup>
+
+</Project>

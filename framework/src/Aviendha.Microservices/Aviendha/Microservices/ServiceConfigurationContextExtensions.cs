@@ -1,0 +1,105 @@
+// Aviendha ABP Framework Extensions
+// Copyright (C) 2025 Doug Wilson
+//
+// This program is free software: you can redistribute it and/or modify it under the terms of
+// the GNU Affero General Public License as published by the Free Software Foundation, either
+// version 3 of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+// without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License along with this
+// program. If not, see <https://www.gnu.org/licenses/>.
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
+using Volo.Abp.Caching;
+using Volo.Abp.Modularity;
+using Volo.Abp.Security.Claims;
+
+namespace Aviendha.Microservices;
+
+public static class ServiceConfigurationContextExtensions
+{
+    public static ServiceConfigurationContext ConfigureMicroservice(this ServiceConfigurationContext context, String name)
+    {
+        context.ConfigureAuthentication(name);
+        context.ConfigureCache(name);
+        context.ConfigureDataProtection(name);
+        context.ConfigureSwaggerServices(name);
+
+        return context;
+    }
+
+    public static ServiceConfigurationContext ConfigureAuthentication(this ServiceConfigurationContext context, String audience)
+    {
+        var configuration = context.Services.GetConfiguration();
+
+        context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddAbpJwtBearer(options =>
+            {
+                options.Authority = configuration[AviendhaMicroserviceKeys.Authority]
+                    ?? throw new AviendhaException(AviendhaErrorCodes.MissingConfigurationValue, AviendhaMicroserviceKeys.Authority);
+                options.RequireHttpsMetadata = configuration.GetValue<Boolean>(AviendhaMicroserviceKeys.RequireHttpsMetadata);
+                options.Audience = audience;
+            });
+
+        context.Services.Configure<AbpClaimsPrincipalFactoryOptions>(options =>
+        {
+            options.IsDynamicClaimsEnabled = true;
+        });
+
+        return context;
+    }
+
+    public static ServiceConfigurationContext ConfigureCache(this ServiceConfigurationContext context, String keyPrefix)
+    {
+        context.Services.Configure<AbpDistributedCacheOptions>(options =>
+        {
+            options.KeyPrefix = $"{keyPrefix}:";
+        });
+
+        return context;
+    }
+
+    public static void ConfigureDataProtection(this ServiceConfigurationContext context, String name)
+    {
+        var configuration = context.Services.GetConfiguration();
+        var hostingEnvironment = context.Services.GetHostingEnvironment();
+
+        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName(name);
+        if (!hostingEnvironment.IsDevelopment())
+        {
+            var redis = ConnectionMultiplexer.Connect(configuration[AviendhaMicroserviceKeys.RedisConfiguration] ?? "redis");
+            dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, AviendhaMicroserviceKeys.DataProtectionKey);
+        }
+    }
+
+    public static ServiceConfigurationContext ConfigureSwaggerServices(this ServiceConfigurationContext context, String name, String version = "v1")
+    {
+        var configuration = context.Services.GetConfiguration();
+        var authority = configuration[AviendhaMicroserviceKeys.Authority]
+            ?? throw new AviendhaException(AviendhaErrorCodes.MissingConfigurationValue, AviendhaMicroserviceKeys.Authority);
+
+        context.Services.AddAbpSwaggerGenWithOAuth(
+            authority,
+            new Dictionary<String, String> {
+                {name, $"{name} API"}
+            },
+            options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = $"{name} API", Version = version });
+                options.DocInclusionPredicate((docName, description) => true);
+                options.CustomSchemaIds(type => type.FullName);
+            });
+
+        return context;
+    }
+}

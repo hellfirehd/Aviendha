@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+<RootNamespace />        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.AuditLogging.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.FeatureManagement.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.OpenIddict.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.SettingManagement.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\TestApp.Domain\TestApp.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

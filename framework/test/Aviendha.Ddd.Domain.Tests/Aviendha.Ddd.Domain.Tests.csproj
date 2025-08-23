@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\modules\BillingManagement\src\Aviendha.BillingManagement.Application.Contracts\Aviendha.BillingManagement.Application.Contracts.csproj" />
+      <ProjectReference Include="..\..\src\Aviendha.Ddd.Domain\Aviendha.Ddd.Domain.csproj" />
+      <ProjectReference Include="..\Aviendha.TestBase\Aviendha.TestBase.csproj" />
+    </ItemGroup>
+    
+</Project>

@@ -1,0 +1,53 @@
+@* Example Blazor component showing how the new index-based LineItem operations work beautifully with Blazor *@
+@page "/invoice/{InvoiceId:guid}/edit"
+
+<h3>Edit Invoice - Line Items</h3>
+
+@if (Invoice != null)
+{
+    <div class="line-items-container">
+        @for (int i = 0; i < Invoice.LineItems.Count; i++)
+        {
+            var index = i; // Capture for closures
+            var lineItem = Invoice.LineItems.ElementAt(i);
+            
+            <div class="line-item @(draggingIndex == index ? "dragging" : "")" 
+                 draggable="true"
+                 @ondragstart="() => StartDrag(index)"
+                 @ondragend="EndDrag"
+                 @ondragover:preventDefault="true"
+                 @ondrop="() => Drop(index)">
+                
+                <div class="line-item-content">
+                    <span class="item-name">@lineItem.Name</span>
+                    
+                    <InputNumber class="quantity-input" 
+                                @bind-Value="quantities[index]" 
+                                @onchange="() => UpdateQuantity(index, quantities[index])" />
+                    
+                    <span class="unit-price">@lineItem.UnitPrice.ToString("C")</span>
+                    <span class="total">@lineItem.Total.ToString("C")</span>
+                </div>
+                
+                <div class="line-item-actions">
+                    <button class="btn btn-sm btn-outline-secondary" @onclick="() => MoveUp(index)" disabled="@(index == 0)">
+                        ↑
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary" @onclick="() => MoveDown(index)" disabled="@(index == Invoice.LineItems.Count - 1)">
+                        ↓
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" @onclick="() => Remove(index)">
+                        ✖
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <div class="invoice-totals">
+        <div>Subtotal: @Invoice.Subtotal.ToString("C")</div>
+        <div>Tax: @Invoice.TotalTax.ToString("C")</div>
+        <div><strong>Total: @Invoice.Total.ToString("C")</strong></div>
+    </div>
+}
+

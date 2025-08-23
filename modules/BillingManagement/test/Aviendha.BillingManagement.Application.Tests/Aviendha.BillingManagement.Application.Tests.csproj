@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Aviendha.BillingManagement.Application\Aviendha.BillingManagement.Application.csproj" />
+        <ProjectReference Include="..\Aviendha.BillingManagement.Domain.Tests\Aviendha.BillingManagement.Domain.Tests.csproj" />
+    </ItemGroup>
+
+</Project>

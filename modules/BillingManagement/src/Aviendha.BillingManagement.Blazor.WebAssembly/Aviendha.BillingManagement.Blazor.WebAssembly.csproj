@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.AspNetCore.Components.WebAssembly.Theming" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Aviendha.BillingManagement.Blazor.WebAssembly.Bundling\Aviendha.BillingManagement.Blazor.WebAssembly.Bundling.csproj" />
+        <ProjectReference Include="..\Aviendha.BillingManagement.Blazor\Aviendha.BillingManagement.Blazor.csproj" />
+        <ProjectReference Include="..\Aviendha.BillingManagement.HttpApi.Client\Aviendha.BillingManagement.HttpApi.Client.csproj" />
+    </ItemGroup>
+
+</Project>

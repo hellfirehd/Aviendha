@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+        <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+        <UseBlazorWebAssembly>true</UseBlazorWebAssembly>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Serilog.Sinks.BrowserConsole" />
+        <PackageReference Include="Volo.Abp.Autofac.WebAssembly" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Aviendha.Logging\Aviendha.Logging.csproj" />
+    </ItemGroup>
+
+</Project>

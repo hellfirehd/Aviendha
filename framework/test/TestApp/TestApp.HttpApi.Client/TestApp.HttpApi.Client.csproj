@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+<RootNamespace />        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="**\*generate-proxy.json" />
+        <Content Remove="**\*generate-proxy.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.Account.HttpApi.Client" />
+        <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" />
+        <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi.Client" />
+        <PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" />
+        <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi.Client" />
+        <PackageReference Include="Volo.Abp.SettingManagement.HttpApi.Client" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\TestApp.Application.Contracts\TestApp.Application.Contracts.csproj" />
+    </ItemGroup>
+
+</Project>

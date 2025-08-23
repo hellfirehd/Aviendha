@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Aviendha.Ddd.Application.Contracts\Aviendha.Ddd.Application.Contracts.csproj" />
+      <ProjectReference Include="..\Aviendha.Ddd.Domain\Aviendha.Ddd.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

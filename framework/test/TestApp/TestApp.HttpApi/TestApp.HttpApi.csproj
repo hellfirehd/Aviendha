@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+<RootNamespace />        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.Account.HttpApi" />
+        <PackageReference Include="Volo.Abp.Identity.HttpApi" />
+        <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi" />
+        <PackageReference Include="Volo.Abp.TenantManagement.HttpApi" />
+        <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi" />
+        <PackageReference Include="Volo.Abp.SettingManagement.HttpApi" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\TestApp.Application.Contracts\TestApp.Application.Contracts.csproj" />
+    </ItemGroup>
+
+</Project>

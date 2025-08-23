@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Aviendha.BillingManagement.Application.Tests" />
+        <InternalsVisibleTo Include="Aviendha.BillingManagement.Domain.Tests" />
+        <InternalsVisibleTo Include="Aviendha.BillingManagement.EntityFrameworkCore.Tests" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" />
+        <PackageReference Include="Volo.Abp.Ddd.Domain" />
+        <PackageReference Include="Volo.Abp.Users.Domain" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\..\framework\src\Aviendha.Ddd.Domain\Aviendha.Ddd.Domain.csproj" />
+        <ProjectReference Include="..\Aviendha.BillingManagement.Domain.Shared\Aviendha.BillingManagement.Domain.Shared.csproj" />
+    </ItemGroup>
+
+</Project>

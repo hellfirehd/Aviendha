@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MongoSandbox.Core" />
+        <PackageReference Include="MongoSandbox8.runtime.linux-x64" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
+        <PackageReference Include="MongoSandbox8.runtime.osx-arm64" Condition="$([MSBuild]::IsOSPlatform('OSX'))" />
+        <PackageReference Include="MongoSandbox8.runtime.win-x64" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Aviendha.MailingListManagement.MongoDB\Aviendha.MailingListManagement.MongoDB.csproj" />
+        <ProjectReference Include="..\Aviendha.MailingListManagement.Application.Tests\Aviendha.MailingListManagement.Application.Tests.csproj" />
+    </ItemGroup>
+
+</Project>

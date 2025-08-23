@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace />
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\TestApp.Domain\TestApp.Domain.csproj" />
+        <ProjectReference Include="..\TestApp.TestBase\TestApp.TestBase.csproj" />
+    </ItemGroup>
+
+</Project>

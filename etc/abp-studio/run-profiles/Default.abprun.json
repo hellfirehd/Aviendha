@@ -1,0 +1,33 @@
+{
+  "folders": {
+    "items": {
+      "Aviendha": {}
+    }
+  },
+  "applications": {
+    "Aviendha.BillingManagement.AuthServer": {
+      "type": "dotnet-project",
+      "path": "../../../modules/BillingManagement/host/Aviendha.BillingManagement.AuthServer/Aviendha.BillingManagement.AuthServer.csproj",
+      "launchUrl": "https://localhost:44362",
+      "folder": "Aviendha"
+    },
+    "Aviendha.BillingManagement.Blazor.Host": {
+      "type": "dotnet-project",
+      "path": "../../../modules/BillingManagement/host/Aviendha.BillingManagement.Blazor.Host/Aviendha.BillingManagement.Blazor.Host.csproj",
+      "launchUrl": "https://localhost:44331",
+      "folder": "Aviendha"
+    },
+    "Aviendha.BillingManagement.Blazor.Server.Host": {
+      "type": "dotnet-project",
+      "path": "../../../modules/BillingManagement/host/Aviendha.BillingManagement.Blazor.Server.Host/Aviendha.BillingManagement.Blazor.Server.Host.csproj",
+      "launchUrl": "https://localhost:44337/",
+      "folder": "Aviendha"
+    },
+    "Aviendha.BillingManagement.HttpApi.Host": {
+      "type": "dotnet-project",
+      "path": "../../../modules/BillingManagement/host/Aviendha.BillingManagement.HttpApi.Host/Aviendha.BillingManagement.HttpApi.Host.csproj",
+      "launchUrl": "https://localhost:44343",
+      "folder": "Aviendha"
+    }
+  }
+}

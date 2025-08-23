@@ -1,0 +1,38 @@
+// Aviendha ABP Framework Extensions
+// Copyright (C) 2025 Doug Wilson
+//
+// This program is free software: you can redistribute it and/or modify it under the terms of
+// the GNU Affero General Public License as published by the Free Software Foundation, either
+// version 3 of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+// without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License along with this
+// program. If not, see <https://www.gnu.org/licenses/>.
+
+using Aviendha.EntityFrameworkCore;
+using EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Sqlite;
+using Volo.Abp.Modularity;
+
+namespace TestApp.EntityFrameworkCore.Sqlite;
+
+[DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))]
+[DependsOn(typeof(AviendhaEntityFrameworkCoreModule))]
+[DependsOn(typeof(TestAppEntityFrameworkCoreModule))]
+public class TestAppEntityFrameworkCoreSqliteModule : AbpModule
+{
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+        Configure<AbpDbContextOptions>(options =>
+        {
+            options.UseSqlite(sql =>
+            {
+                sql.MigrationsAssembly(GetType().Assembly.GetName().Name);
+            });
+        });
+    }
+}

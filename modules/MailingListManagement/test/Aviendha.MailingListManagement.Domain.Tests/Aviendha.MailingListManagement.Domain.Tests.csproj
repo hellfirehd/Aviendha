@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <RootNamespace />
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Aviendha.MailingListManagement.Domain\Aviendha.MailingListManagement.Domain.csproj" />
+        <ProjectReference Include="..\Aviendha.MailingListManagement.TestBase\Aviendha.MailingListManagement.TestBase.csproj" />
+    </ItemGroup>
+
+</Project>

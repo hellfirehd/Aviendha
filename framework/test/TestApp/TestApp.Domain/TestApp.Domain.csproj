@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+<RootNamespace />        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Bogus" />
+        <PackageReference Include="Bogus.Text" />
+        <PackageReference Include="Volo.Abp.AuditLogging.Domain" />
+        <PackageReference Include="Volo.Abp.Emailing" />
+        <PackageReference Include="Volo.Abp.FeatureManagement.Domain" />
+        <PackageReference Include="Volo.Abp.Identity.Domain" />
+        <PackageReference Include="Volo.Abp.OpenIddict.Domain" />
+        <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" />
+        <PackageReference Include="Volo.Abp.PermissionManagement.Domain.OpenIddict" />
+        <PackageReference Include="Volo.Abp.SettingManagement.Domain" />
+        <PackageReference Include="Volo.Abp.TenantManagement.Domain" />
+        <PackageReference Include="Bogus.Tools.Analyzer">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\TestApp.Domain.Shared\TestApp.Domain.Shared.csproj" />
+    </ItemGroup>
+
+</Project>
