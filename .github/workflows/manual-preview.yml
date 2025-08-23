@@ -6,7 +6,7 @@ on:
       branch:
         description: 'Branch to build from'
         required: true
-        default: 'main'
+        default: 'develop'
         type: string
       include_symbols:
         description: 'Include symbol packages'
@@ -93,10 +93,11 @@ jobs:
 
     - name: Create summary
       run: |
-        echo "## Preview Release Published! 🚀" >> $GITHUB_STEP_SUMMARY
+        echo "## Manual Preview Release Published! 🚀" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Version:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
         echo "**Branch:** ${{ github.event.inputs.branch }}" >> $GITHUB_STEP_SUMMARY
         echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Symbols Included:** ${{ github.event.inputs.include_symbols }}" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "Packages are now available on [NuGet.org](https://www.nuget.org/packages?q=Aviendha)."

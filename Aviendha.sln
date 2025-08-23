@@ -169,12 +169,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{DE6A9CE1-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9379E482-1742-412C-8DAF-E045830EAB88}"
 	ProjectSection(SolutionItems) = preProject
+		scripts\release.ps1 = scripts\release.ps1
 		scripts\TagRelease.ps1 = scripts\TagRelease.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{43341327-862F-4BE3-A915-D7B45F36E98F}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\workflows\manual-preview.yml = .github\workflows\manual-preview.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
 Global

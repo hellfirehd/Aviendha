@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -6,10 +6,25 @@ on:
       - main
       - develop
       - 'release/**'
+      - 'hotfix/**'
+    tags:
+      - 'v*'
   pull_request:
     branches:
       - main
       - develop
+      - 'release/**'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Manual release version (e.g., v2.1.2)'
+        required: false
+        type: string
+      force_release:
+        description: 'Force release creation even without tag'
+        required: false
+        default: false
+        type: boolean
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
@@ -38,6 +53,17 @@ jobs:
 
     - name: Set version
       run: nbgv cloud
+
+    - name: Get version info
+      id: version
+      shell: bash
+      run: |
+        VERSION=$(nbgv get-version --variable Version)
+        SIMPLE_VERSION=$(nbgv get-version --variable SimpleVersion)
+        IS_PRERELEASE=$(nbgv get-version --variable PrereleaseVersion)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "simple-version=$SIMPLE_VERSION" >> $GITHUB_OUTPUT
+        echo "is-prerelease=${IS_PRERELEASE:+true}" >> $GITHUB_OUTPUT
 
     - name: Restore dependencies
       run: dotnet restore
@@ -73,30 +99,163 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: nuget-packages
+        name: nuget-packages-${{ steps.version.outputs.simple-version }}
         path: ./artifacts/*.nupkg
 
   publish-preview:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/')
+    if: |
+      (github.event_name == 'push' && 
+       (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/') || startsWith(github.ref, 'refs/heads/hotfix/'))) ||
+      (github.event_name == 'workflow_dispatch' && !github.event.inputs.force_release)
     environment: nuget-preview
 
     steps:
-    - name: Download NuGet packages
-      uses: actions/download-artifact@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
       with:
-        name: nuget-packages
-        path: ./artifacts
+        fetch-depth: 0
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0.x'
 
+    - name: Install Nerdbank.GitVersioning
+      run: dotnet tool install -g nbgv
+
+    - name: Get version info
+      id: version
+      run: |
+        VERSION=$(nbgv get-version --variable Version)
+        SIMPLE_VERSION=$(nbgv get-version --variable SimpleVersion)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "simple-version=$SIMPLE_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Download NuGet packages
+      uses: actions/download-artifact@v4
+      with:
+        name: nuget-packages-${{ steps.version.outputs.simple-version }}
+        path: ./artifacts
+
     - name: Push to NuGet (Preview)
       run: |
+        echo "Publishing preview packages to NuGet..."
         dotnet nuget push "./artifacts/*.nupkg" \
           --source https://api.nuget.org/v3/index.json \
           --api-key ${{ secrets.NUGET_API_KEY }} \
           --skip-duplicate
+
+    - name: Create preview summary
+      run: |
+        echo "## Preview Packages Published! 🚀" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Version:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Preview packages are now available on [NuGet.org](https://www.nuget.org/packages?q=Aviendha)."
+
+  publish-release:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      startsWith(github.ref, 'refs/tags/v') || 
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.force_release == 'true')
+    environment: nuget-release
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Install Nerdbank.GitVersioning
+      run: dotnet tool install -g nbgv
+
+    - name: Get version info
+      id: version
+      run: |
+        VERSION=$(nbgv get-version --variable Version)
+        SIMPLE_VERSION=$(nbgv get-version --variable SimpleVersion)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "simple-version=$SIMPLE_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: nuget-packages-${{ steps.version.outputs.simple-version }}
+        path: ./artifacts
+
+    - name: Push to NuGet (Release)
+      run: |
+        echo "Publishing release packages to NuGet..."
+        dotnet nuget push "./artifacts/*.nupkg" \
+          --source https://api.nuget.org/v3/index.json \
+          --api-key ${{ secrets.NUGET_API_KEY }} \
+          --skip-duplicate
+
+  create-github-release:
+    needs: publish-release
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      startsWith(github.ref, 'refs/tags/v') || 
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.force_release == 'true')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Install Nerdbank.GitVersioning
+      run: dotnet tool install -g nbgv
+
+    - name: Get version info
+      id: version
+      run: |
+        VERSION=$(nbgv get-version --variable Version)
+        SIMPLE_VERSION=$(nbgv get-version --variable SimpleVersion)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "simple-version=$SIMPLE_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: nuget-packages-${{ steps.version.outputs.simple-version }}
+        path: ./artifacts
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ github.event.inputs.version || format('v{0}', steps.version.outputs.version) }}
+        name: Release ${{ github.event.inputs.version || format('v{0}', steps.version.outputs.version) }}
+        draft: false
+        prerelease: false
+        files: ./artifacts/*.nupkg
+        body: |
+          ## Changes in this Release
+          
+          Please see the [CHANGELOG.md](CHANGELOG.md) for details.
+          
+          ## NuGet Packages
+          
+          All packages have been published to [NuGet.org](https://www.nuget.org/packages?q=Aviendha).
+          
+          **Version:** ${{ steps.version.outputs.version }}
+          **Commit:** ${{ github.sha }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
