@@ -16,4 +16,8 @@
       <ProjectReference Include="..\Aviendha.Core\Aviendha.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Aviendha\Application\Querying\" />
+    </ItemGroup>
+
 </Project>

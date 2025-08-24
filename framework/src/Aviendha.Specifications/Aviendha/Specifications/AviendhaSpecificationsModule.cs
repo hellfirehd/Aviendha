@@ -12,14 +12,13 @@
 // You should have received a copy of the GNU Affero General Public License along with this
 // program. If not, see <https://www.gnu.org/licenses/>.
 
-using Aviendha.Specifications;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
+using Volo.Abp.Modularity;
+using Volo.Abp.Specifications;
 
-namespace Aviendha.Domain.Repositories.EntityFrameworkCore;
+namespace Aviendha.Specifications;
 
-public interface IAviendhaEfCoreRepository<TEntity, TKey> : IEfCoreRepository<TEntity, TKey>
-    where TEntity : class, IEntity<TKey>
+[DependsOn(typeof(AbpSpecificationsModule))]
+[DependsOn(typeof(AviendhaCoreModule))]
+public class AviendhaSpecificationsModule : AbpModule
 {
-    Task<IQueryable<TEntity>> GetQueryableAsync(IQuerySpecification<TEntity> spec, CancellationToken cancellationToken = default);
 }

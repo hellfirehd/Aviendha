@@ -15,7 +15,7 @@
 using System.Linq.Expressions;
 using Volo.Abp.Specifications;
 
-namespace Aviendha.Application.Querying;
+namespace Aviendha.Specifications;
 
 public interface IQuerySpecification<TEntity> : ISpecification<TEntity>
 {
