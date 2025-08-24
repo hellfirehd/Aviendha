@@ -13,18 +13,11 @@
     "^refs/tags/v\\d+\\.\\d+\\.\\d+$"
   ],
   "cloudBuild": {
-    "setVersionVariables": true,
     "buildNumber": {
       "enabled": true
     }
   },
   "release": {
-    "branchName": "release/v{version}",
-    "firstUnstableTag": "alpha"
-  },
-  "branchNameMappings": {
-    "develop": "alpha",
-    "release/.*": "rc",
-    "hotfix/.*": "beta"
+    "branchName": "release/v{version}"
   }
 }
