@@ -74,6 +74,22 @@ function Invoke-Git {
     return $result
 }
 
+# Nbgv execution wrapper
+function Invoke-Nbgv {
+    param([string[]]$Arguments, [switch]$ThrowOnError = $true)
+    
+    if ($DryRun) {
+        Write-Info "[DryRun] nbgv $($Arguments -join ' ')"
+        return ""
+    }
+    
+    $result = & nbgv @Arguments 2>&1
+    if ($LASTEXITCODE -ne 0 -and $ThrowOnError) {
+        throw "Nbgv command failed (exit $LASTEXITCODE): nbgv $($Arguments -join ' ')`n$result"
+    }
+    return $result
+}
+
 # Ensure we're in a git repository
 try {
     $repoRoot = git rev-parse --show-toplevel 2>$null
@@ -104,6 +120,22 @@ function Get-VersionInfo {
     $json = nbgv get-version --format json 2>$null
     if (-not $json) { throw "Failed to get version from nbgv" }
     return $json | ConvertFrom-Json
+}
+
+# Update version in version.json using nbgv
+function Set-Version {
+    param([string]$NewVersion)
+    
+    Ensure-Nbgv
+    Write-Info "Updating version to $NewVersion in version.json"
+    
+    if (-not $DryRun) {
+        Invoke-Nbgv @("set-version", $NewVersion)
+        
+        # Commit the version change
+        Invoke-Git @("add", "version.json")
+        Invoke-Git @("commit", "-m", "Bump version to $NewVersion")
+    }
 }
 
 # Get current branch
@@ -157,6 +189,24 @@ Commits:
 $($commits -join "`n")
 "@
     return $notes
+}
+
+# Calculate next version for develop branch after release
+function Get-NextDevelopVersion {
+    param([string]$ReleaseVersion)
+    
+    # Parse the release version (e.g., "2.1.0" -> major=2, minor=1, patch=0)
+    if ($ReleaseVersion -match '^(\d+)\.(\d+)\.(\d+)$') {
+        $major = [int]$matches[1]
+        $minor = [int]$matches[2]
+        $patch = [int]$matches[3]
+        
+        # Increment minor version for next development cycle
+        $nextMinor = $minor + 1
+        return "$major.$nextMinor.0"
+    }
+    
+    throw "Invalid version format: $ReleaseVersion. Expected format: x.y.z"
 }
 
 # Main action handlers
@@ -243,11 +293,15 @@ switch ($Action) {
         # Create and switch to release branch
         Invoke-Git @("checkout", "-b", $releaseBranch)
         
+        # Update version in version.json for the release
+        Set-Version $Version
+        
         if ($Push) {
             Invoke-Git @("push", "-u", "origin", $releaseBranch)
         }
         
         Write-Success "Release branch '$releaseBranch' created successfully!"
+        Write-Info "Version has been updated to $Version in version.json"
         Write-Info "You can now make final adjustments. When ready, run:"
         Write-Info "  ./scripts/GitFlow.ps1 -Action finish-release -Push"
     }
@@ -288,10 +342,15 @@ switch ($Action) {
             Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
         }
         
-        # Merge back to develop
+        # Merge back to develop and update version for next development cycle
         Invoke-Git @("checkout", "develop")
         Invoke-Git @("pull", "origin", "develop")
         Invoke-Git @("merge", "--no-ff", $currentBranch)
+        
+        # Update develop branch with next version
+        $nextDevelopVersion = Get-NextDevelopVersion $releaseVersion
+        Write-Info "Updating develop branch to next version: $nextDevelopVersion"
+        Set-Version $nextDevelopVersion
         
         if ($Push) {
             Invoke-Git @("push", "origin", "main")
@@ -306,6 +365,7 @@ switch ($Action) {
         }
         
         Write-Success "Release '$tagName' completed successfully!"
+        Write-Info "Develop branch has been updated to version $nextDevelopVersion for next development cycle"
         Write-Info "Release packages will be automatically built and published to NuGet."
     }
     
@@ -340,6 +400,20 @@ switch ($Action) {
         Assert-CleanWorkingDirectory
         
         Write-Info "Finishing hotfix branch: $currentBranch"
+        
+        # Get current version and increment patch version for hotfix
+        $versionInfo = Get-VersionInfo
+        if ($versionInfo.SimpleVersion -match '^(\d+)\.(\d+)\.(\d+)$') {
+            $major = [int]$matches[1]
+            $minor = [int]$matches[2]
+            $patch = [int]$matches[3] + 1
+            $hotfixVersion = "$major.$minor.$patch"
+        } else {
+            throw "Cannot parse current version: $($versionInfo.SimpleVersion)"
+        }
+        
+        # Update version for hotfix
+        Set-Version $hotfixVersion
         
         # Merge to main
         Invoke-Git @("checkout", "main")
