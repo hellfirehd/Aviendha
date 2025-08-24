@@ -12,10 +12,10 @@
 // You should have received a copy of the GNU Affero General Public License along with this
 // program. If not, see <https://www.gnu.org/licenses/>.
 
-using FluentValidation;
+using Aviendha.Emailing;
 using FluentValidation.Validators;
 
-namespace Aviendha.Emailing;
+namespace FluentValidation;
 
 public class EmailAddressPropertyValidator<T>()
     : PropertyValidator<T, EmailAddress>
