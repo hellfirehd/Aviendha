@@ -44,19 +44,6 @@ public static class AviendhaEnumerableExtensions
 
     // https://stackoverflow.com/a/41384214/32588
 
-    public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, Int32 index, T value)
-        => enumerable.SelectMany((x, i) => index == i ? new T[] { value, x } : [x]);
-
-    public static IEnumerable<T> Replace<T>(this IEnumerable<T> enumerable, Int32 index, T value)
-        => enumerable.Select((x, i) => index == i ? value : x);
-
-    /// <summary>
-    /// Replaces any element that matches <paramref name="predicate"/> in <paramref name="enumerable"/> with
-    /// <paramref name="value"/>.
-    /// </summary>
-    public static IEnumerable<TSource> Replace<TSource>(this IEnumerable<TSource> enumerable, Func<TSource, Boolean> predicate, TSource value)
-        => enumerable.Select((x, _) => predicate.Invoke(x) ? value : x);
-
     public static IEnumerable<TSource> ReplaceOrAdd<TSource>(this IEnumerable<TSource> enumerable, Func<TSource, Boolean> predicate, TSource value)
     {
         var replaced = false;
