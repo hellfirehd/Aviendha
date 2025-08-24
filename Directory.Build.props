@@ -19,6 +19,7 @@
         <IsTestProject Condition="$(MSBuildProjectName.EndsWith('Tests')) or $(MSBuildProjectName.EndsWith('.TestBase'))">true</IsTestProject>
         <IsModule Condition="$(MSBuildProjectFullPath.Contains('modules'))">true</IsModule>
         <IsApplication Condition="$(MSBuildProjectFullPath.Contains('host'))">true</IsApplication>
+        
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
