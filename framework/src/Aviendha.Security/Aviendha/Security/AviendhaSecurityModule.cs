@@ -18,7 +18,7 @@ using Volo.Abp.Security;
 namespace Aviendha.Security;
 
 [DependsOn(typeof(AbpSecurityModule))]
-[DependsOn(typeof(AviendhaModule))]
+[DependsOn(typeof(AviendhaCoreModule))]
 public class AviendhaSecurityModule : AbpModule
 {
 }

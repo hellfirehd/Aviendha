@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\framework\src\Aviendha\Aviendha.csproj" />
+      <ProjectReference Include="..\..\..\..\framework\src\Aviendha.Core\Aviendha.Core.csproj" />
       <ProjectReference Include="..\Aviendha.MailingListManagement.Domain.Shared\Aviendha.MailingListManagement.Domain.Shared.csproj" />
     </ItemGroup>
 

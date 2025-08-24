@@ -15,7 +15,7 @@
 using System.Linq.Expressions;
 using Volo.Abp.Specifications;
 
-namespace Aviendha.Application.Querying;
+namespace Aviendha.Specifications;
 public class QuerySpecification<TEntity>(Expression<Func<TEntity, Boolean>> expression) : ExpressionSpecification<TEntity>(expression), IQuerySpecification<TEntity> where TEntity : class
 {
     public QuerySpecification(ISpecification<TEntity> specification) : this(specification.ToExpression()) { }

@@ -36,7 +36,7 @@ namespace Aviendha.Microservices;
 [DependsOn(typeof(AbpCachingStackExchangeRedisModule))]
 [DependsOn(typeof(AbpDistributedLockingModule))]
 [DependsOn(typeof(AbpSwashbuckleModule))]
-[DependsOn(typeof(AviendhaModule))]
+[DependsOn(typeof(AviendhaCoreModule))]
 public class AviendhaMicroserviceModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)

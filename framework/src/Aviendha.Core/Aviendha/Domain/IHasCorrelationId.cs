@@ -12,13 +12,9 @@
 // You should have received a copy of the GNU Affero General Public License along with this
 // program. If not, see <https://www.gnu.org/licenses/>.
 
-using Volo.Abp.Domain;
-using Volo.Abp.Modularity;
-
 namespace Aviendha.Domain;
 
-[DependsOn(typeof(AviendhaCoreModule))]
-[DependsOn(typeof(AbpDddDomainSharedModule))]
-public class AviendhaDddDomainModule : AbpModule
+public interface IHasCorrelationId
 {
+    CorrelationId CorrelationId { get; }
 }

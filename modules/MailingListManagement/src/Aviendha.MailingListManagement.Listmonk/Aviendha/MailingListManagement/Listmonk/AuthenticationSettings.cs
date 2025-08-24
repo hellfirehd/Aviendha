@@ -13,8 +13,8 @@
 // program. If not, see <https://www.gnu.org/licenses/>.
 
 using Aviendha.MailingListManagement.Listmonk.Settings;
-using Aviendha.Settings;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;
 
 namespace Aviendha.MailingListManagement.Listmonk;

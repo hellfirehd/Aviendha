@@ -23,7 +23,7 @@ using Volo.Abp.VirtualFileSystem;
 
 namespace Aviendha.BillingManagement;
 
-[DependsOn(typeof(AviendhaModule))]
+[DependsOn(typeof(AviendhaCoreModule))]
 [DependsOn(typeof(AbpValidationModule))]
 [DependsOn(typeof(AbpDddDomainSharedModule))]
 public class AviendhaBillingManagementDomainSharedModule : AbpModule

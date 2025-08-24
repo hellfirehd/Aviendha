@@ -19,13 +19,18 @@
         <IsTestProject Condition="$(MSBuildProjectName.EndsWith('Tests')) or $(MSBuildProjectName.EndsWith('.TestBase'))">true</IsTestProject>
         <IsModule Condition="$(MSBuildProjectFullPath.Contains('modules'))">true</IsModule>
         <IsApplication Condition="$(MSBuildProjectFullPath.Contains('host'))">true</IsApplication>
+        
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+    
     <PropertyGroup Condition="'$(IsApplication)' != 'true'">
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PackageIcon>aviendha.png</PackageIcon>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-        <PackageOutputPath>$(SolutionDir)\artifacts</PackageOutputPath>
+        <PackageOutputPath>$(SolutionDir)artifacts</PackageOutputPath>
         <PackageProjectUrl>https://abp.Aviendha.Aviendha.io/</PackageProjectUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -108,6 +113,11 @@
             <TreatAsUsed>true</TreatAsUsed>
         </PackageReference>
         <PackageReference Include="Bogus.Tools.Analyzer">
+            <TreatAsUsed>true</TreatAsUsed>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
             <TreatAsUsed>true</TreatAsUsed>
         </PackageReference>
         <PackageReference Include="Microsoft.NET.Test.Sdk">

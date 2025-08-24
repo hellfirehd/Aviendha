@@ -6,11 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Volo.Abp.Security" />
+        <PackageReference Include="Volo.Abp.Core" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Aviendha.Core\Aviendha.Core.csproj" />
-    </ItemGroup>
-    
 </Project>

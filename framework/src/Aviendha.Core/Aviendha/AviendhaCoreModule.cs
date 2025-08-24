@@ -12,11 +12,8 @@
 // You should have received a copy of the GNU Affero General Public License along with this
 // program. If not, see <https://www.gnu.org/licenses/>.
 
-using Aviendha.Domain;
+using Volo.Abp.Modularity;
 
-namespace Aviendha.Application;
+namespace Aviendha;
 
-public interface IHasCorrelationId
-{
-    CorrelationId CorrelationId { get; }
-}
+public class AviendhaCoreModule : AbpModule;

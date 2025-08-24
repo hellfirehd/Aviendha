@@ -1,12 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace />
         <TargetFramework>net9.0</TargetFramework>
+        <IsPackable>true</IsPackable>
+        <Description>Meta package for Aviendha projects</Description>
+        <PackageTags>aviendha;meta;framework;abp;blazor;dotnet</PackageTags>
+        <Authors>Doug Wilson</Authors>
+        <Company>Doug Wilson</Company>
+        <Copyright>Copyright 2025 Doug Wilson</Copyright>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Volo.Abp.Core" />
+        <ProjectReference Include="../Aviendha.Core/Aviendha.Core.csproj" />
+        <ProjectReference Include="../Aviendha.Ddd.Application.Contracts/Aviendha.Ddd.Application.Contracts.csproj" />
+        <ProjectReference Include="../Aviendha.Ddd.Application/Aviendha.Ddd.Application.csproj" />
+        <ProjectReference Include="../Aviendha.Ddd.Domain.Shared/Aviendha.Ddd.Domain.Shared.csproj" />
+        <ProjectReference Include="../Aviendha.Ddd.Domain/Aviendha.Ddd.Domain.csproj" />
+        <ProjectReference Include="../Aviendha.Emailing/Aviendha.Emailing.csproj" />
+        <ProjectReference Include="../Aviendha.EntityFrameworkCore/Aviendha.EntityFrameworkCore.csproj" />
+        <ProjectReference Include="../Aviendha.Hosting/Aviendha.Hosting.csproj" />
+        <ProjectReference Include="../Aviendha.IdGeneration/Aviendha.IdGeneration.csproj" />
+        <ProjectReference Include="../Aviendha.Logging.Hosting/Aviendha.Logging.Hosting.csproj" />
+        <ProjectReference Include="../Aviendha.Logging.WebAssembly/Aviendha.Logging.WebAssembly.csproj" />
+        <ProjectReference Include="../Aviendha.Logging/Aviendha.Logging.csproj" />
+        <ProjectReference Include="../Aviendha.Microservices/Aviendha.Microservices.csproj" />
+        <ProjectReference Include="../Aviendha.OpenApi/Aviendha.OpenApi.csproj" />
+        <ProjectReference Include="../Aviendha.OpenIddict/Aviendha.OpenIddict.csproj" />
+        <ProjectReference Include="../Aviendha.Security/Aviendha.Security.csproj" />
     </ItemGroup>
 
 </Project>

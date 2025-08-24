@@ -14,6 +14,7 @@
 
 using Aviendha.Application;
 using Aviendha.EntityFrameworkCore.Migrations;
+using Aviendha.Specifications;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
@@ -21,6 +22,7 @@ using Volo.Abp.Modularity;
 namespace Aviendha.EntityFrameworkCore;
 
 [DependsOn(typeof(AviendhaDddApplicationModule))]
+[DependsOn(typeof(AviendhaSpecificationsModule))]
 [DependsOn(typeof(AbpEntityFrameworkCoreModule))]
 public class AviendhaEntityFrameworkCoreModule : AbpModule
 {

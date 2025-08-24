@@ -12,8 +12,25 @@
 // You should have received a copy of the GNU Affero General Public License along with this
 // program. If not, see <https://www.gnu.org/licenses/>.
 
-using Volo.Abp.Modularity;
+using System.Linq.Expressions;
+using Volo.Abp.Specifications;
 
-namespace Aviendha;
+namespace Aviendha.Specifications;
 
-public class AviendhaModule : AbpModule;
+public interface IQuerySpecification<TEntity> : ISpecification<TEntity>
+{
+    ICollection<Expression<Func<TEntity, Object>>> Includes { get; }
+    Expression<Func<TEntity, Object>>? OrderBy { get; }
+    Expression<Func<TEntity, Object>>? ThenBy { get; }
+    Expression<Func<TEntity, Object>>? OrderByDescending { get; }
+    Expression<Func<TEntity, Object>>? GroupBy { get; }
+
+    Int32 PageSize { get; }
+
+    /// <summary>
+    /// Page number, starting at 1.
+    /// </summary>
+    Int32 PageNo { get; }
+    Boolean IsPagingEnabled { get; }
+    Boolean IsReadOnly { get; }
+}

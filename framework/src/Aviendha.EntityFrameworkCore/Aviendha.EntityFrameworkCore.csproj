@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Aviendha.Ddd.Application\Aviendha.Ddd.Application.csproj" />
+      <ProjectReference Include="..\Aviendha.Specifications\Aviendha.Specifications.csproj" />
     </ItemGroup>
 
 </Project>

@@ -23,7 +23,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\..\framework\src\Aviendha.Ddd.Domain.Shared\Aviendha.Ddd.Domain.Shared.csproj" />
-        <ProjectReference Include="..\..\..\..\framework\src\Aviendha\Aviendha.csproj" />
+        <ProjectReference Include="..\..\..\..\framework\src\Aviendha.Core\Aviendha.Core.csproj" />
     </ItemGroup>
 
 </Project>

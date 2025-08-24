@@ -19,7 +19,7 @@ using Volo.Abp.Modularity;
 
 namespace Aviendha.MailingListManagement;
 
-[DependsOn(typeof(AviendhaModule))]
+[DependsOn(typeof(AviendhaCoreModule))]
 [DependsOn(typeof(AviendhaMailingListManagementDomainModule))]
 [DependsOn(typeof(AviendhaMailingListManagementApplicationContractsModule))]
 [DependsOn(typeof(AbpDddApplicationModule))]
